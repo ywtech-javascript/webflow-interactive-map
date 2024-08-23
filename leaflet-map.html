@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+
+
+</head>
+
+<body>
+    <script src="map-data.js"></script>
+    <script>
+        if (mapData) {
+            mapData.sort(function (a, b) {
+                var keyA = a.name,
+                    keyB = b.name;
+                // Compare the 2 dates
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            console.log('mapData generated from Childcare Locations Collection:', mapData);
+        } else {
+            console.error('Has the Childcare Locations Component been included?');
+        }
+    </script>
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .map-container {
+            display: grid;
+            grid-template-columns: auto 450px;
+            /* height: calc(100vh - 100px); */
+            height: 100vh;
+        }
+
+
+        .popup h3,
+        .listing h3 {
+            font-size: 1.2rem;
+        }
+
+        #marker-list-container {
+            /* height: calc(100vh - 100px); */
+            height: 100vh;
+            overflow-y: auto;
+
+        }
+
+        .popup h3,
+        .popup p,
+        .listing h3,
+        .listing p {
+            margin: 0;
+        }
+
+        .listing {
+            padding: 10px 20px;
+            border-top: solid 1px #CCC;
+        }
+    </style>
+
+
+    <!-- HTML -->
+    <section class="map-container">
+        <div id="map"></div>
+        <div id="marker-list-container"></div>
+    </section>
+
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        /** Notes
+         * 
+         * Map Providers: https://leaflet-extras.github.io/leaflet-providers/preview/
+         * Childcare Providers: https://assets.nationbuilder.com/childcarenetworkofevanstonorg/pages/12/attachments/original/1694452341/1_%E2%80%93_Early_Learning_Programs.pdf?1694452341
+         */
+
+        // set global variables:
+        const mapCenter = [42.0357, -87.6894];
+        const zoom = 14;
+        const map = L.map('map').setView(mapCenter, zoom);
+        const markers = {};
+        const markerListContainer = document.querySelector('#marker-list-container')
+        const popup = L.popup();
+        const stamenToner = 'https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png';
+        // const stamenTonerBackground = 'https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.png';
+
+
+        // add base tileset
+        L.tileLayer(stamenToner, {
+            maxZoom: 19,
+            attribution: '&copy; &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+
+        // add markers:
+        mapData.forEach(addMarker);
+
+        // fit map to markers:
+        const points = mapData.map(provider => [provider.lat, provider.lng]);
+        var bounds = new L.LatLngBounds(points);
+        map.fitBounds(bounds);
+
+        function addMarker(provider, idx) {
+            // add marker to map:
+            const point = [provider.lat, provider.lng];
+            const marker = L.marker(point).addTo(map);
+            marker.id = `marker_${idx + 1}`;
+            markers[marker.id] = marker;
+            const templatePopup = getTemplate(provider);
+            marker.bindPopup(templatePopup);
+
+            // add marker to list:
+            const templateMarkerListing = getTemplate(provider, className = "listing", marker);
+            markerListContainer.insertAdjacentHTML('beforeend', templateMarkerListing)
+        }
+
+        function openMarker(markerId) {
+            markers[markerId].openPopup();
+        }
+
+        function getTemplate(provider, className = "popup", marker = null) {
+
+            let details = '';
+            details += provider.phone1 ? `<li>${provider.phone1}</li>` : '';
+            details += provider.phone2 ? `<li>${provider.phone2}</li>` : '';
+            details += provider.address ? `<li>${provider.address}</li>` : '';
+            details += provider.email ? `<li>${provider.email}</li>` : '';
+            details += provider.website ? `<li><a href="${provider.website}" target="_blank">${provider.website}</a></li>` : '';
+
+            if (provider.notes) {
+                let notes = provider.notes;
+                notes = notes.replaceAll('&lt;', '<');
+                notes = notes.replaceAll('&gt;', '>');
+                notes = notes.replaceAll('\n', '<br>');
+                details += `<li>${notes}</li>`;
+            }
+
+            return `
+                <div class="${className}">
+                    <h3>${provider.name}</h3>
+                    <ul>
+                        ${details}
+                    </ul>
+                    ${marker ? `<button class="button" onclick="openMarker('${marker.id}')">More</button>` : ''}
+                </div>
+            `;
+        }
+
+    </script>
+</body>
+
+</html>
