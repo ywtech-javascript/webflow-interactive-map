@@ -4,22 +4,19 @@ import { MapContainer } from "react-leaflet";
 import BoundsManager from "./components/BoundsManager";
 import TileManager from "./components/TileManager";
 import MarkerManager from "./components/MarkerManager";
-import Listings from "./components/Listings";
+import ProviderInfo from "./components/ProviderInfo";
 
 import locationData from "./map-data";
 
 export default function App() {
-    // sort the data alphabetically:
-    locationData.sort(function (a, b) {
-        var keyA = a.name,
-            keyB = b.name;
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-
     return (
         <div className="layout">
+            <section className="marker-list-container">
+                {locationData.map((provider) => {
+                    return <ProviderInfo provider={provider} />;
+                })}
+            </section>
+
             <MapContainer
                 className="full-screen-map"
                 center={[42.0357, -87.6894]}
@@ -30,9 +27,6 @@ export default function App() {
                 <BoundsManager providers={locationData} />
                 <MarkerManager providers={locationData} />
             </MapContainer>
-            <section className="marker-list-container">
-                <Listings providers={locationData} />
-            </section>
         </div>
     );
 }

@@ -78,4 +78,13 @@ const mapData = [
     },
 ];
 
+// sort the data alphabetically:
+mapData.sort(function (a, b) {
+    var keyA = a.name,
+        keyB = b.name;
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+});
+
 export default mapData;

@@ -4,29 +4,5 @@
 
 .layout {
     display: grid;
-    grid-template-columns: auto 450px;
-}
-
-.popup h3,
-.listing h3 {
-    font-size: 1.2rem;
-}
-
-.marker-list-container {
-    /* height: calc(100vh - 100px); */
-    height: 100vh;
-    overflow-y: auto;
-
-}
-
-.popup h3,
-.popup p,
-.listing h3,
-.listing p {
-    margin: 0;
-}
-
-.listing {
-    padding: 10px 20px;
-    border-top: solid 1px #CCC;
+    grid-template-columns: 450px auto;
 }
