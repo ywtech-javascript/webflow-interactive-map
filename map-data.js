@@ -77,3 +77,5 @@ const mapData = [
         notes: "",
     },
 ];
+
+export default mapData;
