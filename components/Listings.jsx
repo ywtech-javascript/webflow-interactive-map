@@ -1,8 +1,6 @@
-import { Popup } from "react-leaflet";
 import React from "react";
 
-export default function InfoBubble({ provider }) {
-    
+export default function Listings({ providers }) {
     function appendNotes(provider, lis) {
         let notes = provider.notes;
         notes = notes.replaceAll("&lt;", "<");
@@ -12,7 +10,7 @@ export default function InfoBubble({ provider }) {
         });
     }
 
-    function getTemplate(provider, className = "popup") {
+    function getTemplate(provider, className = "listing") {
         const lis = [];
         if (provider.phone1) {
             lis.push(<li key="phone1">{provider.phone1}</li>);
@@ -45,5 +43,11 @@ export default function InfoBubble({ provider }) {
             </div>
         );
     }
-    return <Popup>{getTemplate(provider)}</Popup>;
+    return (
+        <>
+            {providers.map((provider) => {
+                return getTemplate(provider);
+            })}
+        </>
+    );
 }
