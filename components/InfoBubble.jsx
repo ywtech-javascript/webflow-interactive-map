@@ -2,7 +2,6 @@ import { Popup } from "react-leaflet";
 import React from "react";
 
 export default function InfoBubble({ provider }) {
-    
     function appendNotes(provider, lis) {
         let notes = provider.notes;
         notes = notes.replaceAll("&lt;", "<");
@@ -37,13 +36,10 @@ export default function InfoBubble({ provider }) {
         }
         if (provider.notes) {
             appendNotes(provider, lis);
-            // lis.push(getNotes(provider));
         }
         return (
             <div className={className}>
-                <h3>
-                    <i className="fa-solid fa-children"></i> {provider.name}
-                </h3>
+                <h2>{provider.name}</h2>
                 <ul>{lis}</ul>
             </div>
         );
