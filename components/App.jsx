@@ -1,10 +1,11 @@
 import "./App.css";
+import "./leaflet.css";
 import React from "react";
 import { MapContainer } from "react-leaflet";
-import BoundsManager from "./components/BoundsManager";
-import TileManager from "./components/TileManager";
-import MarkerManager from "./components/MarkerManager";
-import ProviderInfo from "./components/ProviderInfo";
+import BoundsManager from "./BoundsManager";
+import TileManager from "./TileManager";
+import MarkerManager from "./MarkerManager";
+import ProviderInfo from "./ProviderInfo";
 
 // import locationData from "./map-data";
 

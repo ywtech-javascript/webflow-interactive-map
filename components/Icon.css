@@ -3,16 +3,16 @@
     background-color: #1C6A8EEE;
     /* background: #1C6A8E; */
     border-radius: 50%;
-    padding: 10px !important;
+    /* padding: 10px !important; */
     /* border: solid 3px #444; */
     border: solid 3px #fff;
     /* background-image: url('../images/kids-bw.png'); */
     /* background-image: url('../images/icons8-kids-52.png'); */
     /* background-image: url('../images/boy.png'); */
     /* background-image: url('../images/abc-block.png'); */
-    background-image: url('../images/alphabet_white.png');
+    background-image: url('/images/alphabet_white.png');
     /* background-image: url('../images/abc.png'); */
-    background-size: 45px 45px;
+    background-size: 40px 40px;
     background-repeat: no-repeat;
     background-position: center center;
     z-index: 10000000 !important;
@@ -27,7 +27,7 @@
     background-size: 35px 35px;
     padding: 0 !important;
     background-size: 25px 25px;
-    background-image: none;
+    background-image: url('/images/1x1.png');
     border: solid 1px #fff;
 }
 
