@@ -9,11 +9,15 @@ export default function MarkerManager({ providers }) {
     return (
         <>
             {providers.map((provider, idx) => {
+                let className = "icon-marker";
+                if (provider.accepts_ccap.toUpperCase() === "YES") {
+                    className = "icon-marker-ccap";
+                }
                 return (
                     <Marker
                         key={`marker_${idx}`}
                         position={[provider.lat, provider.lng]}
-                        icon={Icon}
+                        icon={Icon({ className: className })}
                     >
                         <Popup>
                             <ProviderInfo

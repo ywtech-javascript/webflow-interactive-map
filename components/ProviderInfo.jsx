@@ -33,6 +33,14 @@ export default function ProviderInfo({ provider, className = "listing" }) {
             </li>
         );
     }
+    if (provider.accepts_ccap) {
+        lis.push(
+            <li key="ccap">
+                <strong>Accepts CCAP: </strong>
+                {provider.accepts_ccap || "Unknown"}
+            </li>
+        );
+    }
     if (provider.notes) {
         appendNotes(lis);
     }

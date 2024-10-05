@@ -1,6 +1,10 @@
-.popup h2,
 .listing h2 {
     font-size: 1.2rem;
+}
+
+.popup h2 {
+    font-size: 1.0rem;
+    margin: 0 0 5px 0;
 }
 
 .marker-list-container {
@@ -10,14 +14,27 @@
 
 }
 
-.popup h2,
 .popup p,
 .listing h2,
 .listing p {
+    margin: 0 0 10px 0;
+}
+
+.popup ul,
+.listing ul {
     margin: 0;
 }
 
+.popup li,
+.listing li,
+.popup p,
+.listing p {
+    color: #606060;
+    line-height: 1.2rem;
+    font-size: 0.9rem;
+}
+
 .listing {
-    padding: 10px 20px;
+    padding: 15px 20px;
     border-top: solid 1px #CCC;
 }
