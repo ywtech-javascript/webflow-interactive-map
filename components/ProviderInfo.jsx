@@ -2,11 +2,14 @@ import React from "react";
 import "./ProviderInfo.css";
 import { TfiEmail } from "react-icons/tfi";
 import { FaPhone, FaRegCircleXmark } from "react-icons/fa6";
-import { MdAlternateEmail } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { TbWorld } from "react-icons/tb";
 
-export default function ProviderInfo({ provider, className = "listing" }) {
+export default function ProviderInfo({
+    provider,
+    markers,
+    className = "listing",
+}) {
     function getNotes() {
         let text = "";
         let notes = provider.notes;
@@ -15,15 +18,11 @@ export default function ProviderInfo({ provider, className = "listing" }) {
         notes.split("<br>").forEach((item) => {
             text += item;
         });
-        return <p>{text}</p>;
+        return <>{text}</>;
     }
 
-    const lis = [];
-    // if (provider.notes) {
-    //     appendNotes(lis);
-    // }
-    if (provider.phone1) {
-        lis.push(
+    function getPhoneNumbers() {
+        return (
             <li key="phone1">
                 <FaPhone />
                 {provider.phone1}{" "}
@@ -31,21 +30,32 @@ export default function ProviderInfo({ provider, className = "listing" }) {
             </li>
         );
     }
-    if (provider.address) {
-        lis.push(
+
+    function getAddresses() {
+        return (
             <li key="address">
                 <TfiEmail />
-                {provider.address}
+                <span>
+                    {provider.address}
+                    {provider.email ? (
+                        <>
+                            <br />
+                            {provider.email}
+                        </>
+                    ) : (
+                        ""
+                    )}
+                </span>
             </li>
         );
     }
-    if (provider.email) {
-        lis.push(
-            <li key="email">
-                <MdAlternateEmail />
-                {provider.email}
-            </li>
-        );
+
+    const lis = [];
+    if (provider.phone1) {
+        lis.push(getPhoneNumbers());
+    }
+    if (provider.address || provider.address) {
+        lis.push(getAddresses());
     }
     if (provider.website) {
         lis.push(
@@ -77,10 +87,26 @@ export default function ProviderInfo({ provider, className = "listing" }) {
         }
     }
     return (
-        <div className={className}>
-            <h2>{provider.name}</h2>
-            {provider.notes ? <p>{getNotes()}</p> : ""}
-            <ul>{lis}</ul>
+        <div className={className} id={provider.id}>
+            <div>
+                <h2>{provider.name}</h2>
+                {provider.notes ? <p className="notes">{getNotes()}</p> : ""}
+                <ul className="details">{lis}</ul>
+            </div>
+            <div>
+                {className == "listing" ? (
+                    <button
+                        className="transparent-button"
+                        onClick={(ev) => {
+                            markers[provider.id].current.openPopup();
+                        }}
+                    >
+                        show
+                    </button>
+                ) : (
+                    ""
+                )}
+            </div>
         </div>
     );
 }

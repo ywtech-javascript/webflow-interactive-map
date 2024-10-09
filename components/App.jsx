@@ -5,27 +5,25 @@ import { MapContainer } from "react-leaflet";
 import BoundsManager from "./BoundsManager";
 import TileManager from "./TileManager";
 import MarkerManager from "./MarkerManager";
-import ProviderInfo from "./ProviderInfo";
-
-// import locationData from "./map-data";
+import ListingManager from "./ListingManager";
 
 export default function App() {
     const bounds = [
         [42.1, -87.85],
         [41.95, -87.6],
     ];
+    const markers = {};
+    const markerListings = {};
+
+    // sort and append IDs:
+    window.mapData.forEach((provider, idx) => {
+        provider.id =
+            provider.name.replaceAll(" ", "_").toLowerCase() + "_" + idx;
+    });
+
     return (
         <div className="layout">
-            <section className="marker-list-container">
-                {window.mapData.map((provider, idx) => {
-                    return (
-                        <ProviderInfo
-                            key={`marker_${idx}`}
-                            provider={provider}
-                        />
-                    );
-                })}
-            </section>
+            <ListingManager providers={window.mapData} markers={markers} />
 
             <MapContainer
                 className="full-screen-map"
@@ -37,7 +35,7 @@ export default function App() {
             >
                 <TileManager />
                 <BoundsManager providers={window.mapData} />
-                <MarkerManager providers={window.mapData} />
+                <MarkerManager providers={window.mapData} markers={markers} />
             </MapContainer>
         </div>
     );

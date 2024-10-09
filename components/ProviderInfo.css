@@ -1,5 +1,15 @@
+.listing {
+    padding: 10px 10px;
+    border-top: solid 1px #EEE;
+    display: grid;
+    grid-template-columns: auto 50px;
+    align-items: center;
+}
+
 .listing h2 {
     font-size: 1.0rem;
+    font-weight: normal;
+    color: #676767;
 }
 
 .popup h2 {
@@ -10,7 +20,11 @@
 .marker-list-container {
     height: 100vh;
     overflow-y: auto;
+}
 
+.listing .notes,
+.listing .details {
+    display: none;
 }
 
 .popup p,
@@ -42,11 +56,25 @@
 .listing li {
     display: flex;
     gap: 5px;
-    align-items: center;
-    margin: 0 0 1px 0;
+    align-items: flex-start;
+    margin: 0 0 3px 0;
 }
 
-.listing {
-    padding: 15px 20px;
-    border-top: solid 1px #CCC;
+li svg {
+    margin-top: 2px;
+}
+
+.transparent-button {
+    background-color: transparent;
+    border: solid 1px transparent;
+    color: rgb(70, 93, 224);
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.transparent-button:hover {
+    background-color: transparent;
+    border-width: 1;
+    color: rgb(70, 93, 224);
+    border-color: rgb(70, 93, 224);
 }
