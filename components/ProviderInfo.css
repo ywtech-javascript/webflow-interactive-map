@@ -1,5 +1,5 @@
 .listing h2 {
-    font-size: 1.2rem;
+    font-size: 1.0rem;
 }
 
 .popup h2 {
@@ -8,21 +8,25 @@
 }
 
 .marker-list-container {
-    /* height: calc(100vh - 100px); */
     height: 100vh;
     overflow-y: auto;
 
 }
 
 .popup p,
-.listing h2,
 .listing p {
-    margin: 0 0 10px 0;
+    margin: 0 0 3px 0;
+}
+
+.listing h2 {
+    margin: 0 0 3px 0;
 }
 
 .popup ul,
 .listing ul {
     margin: 0;
+    padding: 0 0 0 10px;
+    list-style-type: none;
 }
 
 .popup li,
@@ -32,6 +36,14 @@
     color: #606060;
     line-height: 1.2rem;
     font-size: 0.9rem;
+}
+
+.popup li,
+.listing li {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin: 0 0 1px 0;
 }
 
 .listing {
