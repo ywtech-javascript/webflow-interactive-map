@@ -4,7 +4,7 @@ import ProviderInfo from "./ProviderInfo";
 
 import Icon from "./Icon";
 
-export default function Marker({ provider, markers, setActiveMarker }) {
+export default function Marker({ provider, markers, setActiveMarkerById }) {
     const markerRef = useRef(null);
     markers[provider.id] = markerRef;
     let className = "icon-marker";
@@ -20,8 +20,11 @@ export default function Marker({ provider, markers, setActiveMarker }) {
             ref={markerRef}
             eventHandlers={{
                 click: () => {
-                    markerRef.current.id = provider.id;
-                    setActiveMarker(markerRef.current);
+                    setActiveMarkerById(provider.id);
+                    // scroll sidebar into view:
+                    document
+                        .getElementById(provider.id)
+                        .scrollIntoViewIfNeeded();
                 },
             }}
         >

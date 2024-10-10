@@ -1,6 +1,6 @@
 import "./App.css";
 import "./leaflet.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MapContainer } from "react-leaflet";
 import BoundsManager from "./BoundsManager";
 import TileManager from "./TileManager";
@@ -12,9 +12,9 @@ export default function App() {
         [42.1, -87.85],
         [41.95, -87.6],
     ];
-    let activeMarker = null;
+    const [activeMarker, setActiveMarker] = useState(null);
+    const [zoomLevel, setZoomLevel] = useState(13);
     const markers = {};
-    const markerListings = {};
 
     // sort and append IDs:
     window.mapData.forEach((provider, idx) => {
@@ -22,18 +22,15 @@ export default function App() {
             provider.name.replaceAll(" ", "_").toLowerCase() + "_" + idx;
     });
 
-    function showPopup() {
-        activeMarker.openPopup();
-    }
-
-    function setActiveMarker(marker) {
-        activeMarker = marker;
-        showPopup();
-    }
+    useEffect(() => {
+        if (activeMarker) {
+            activeMarker.openPopup();
+        }
+    }, [activeMarker]);
 
     function setActiveMarkerById(markerId) {
-        activeMarker = markers[markerId].current;
-        showPopup();
+        markers[markerId].current.id = markerId;
+        setActiveMarker(markers[markerId].current);
     }
 
     return (
@@ -50,31 +47,30 @@ export default function App() {
                     );
                 })}
             </section>
-            {/* <ListingManager providers={window.mapData} markers={markers} /> */}
 
             <MapContainer
                 className="full-screen-map"
                 center={[42.03, -87.738]}
-                zoom={13}
+                zoom={zoomLevel}
                 scrollWheelZoom={true}
                 minZoom={12}
                 maxBounds={bounds}
             >
                 <TileManager />
-                <BoundsManager providers={window.mapData} />
-                <>
-                    {window.mapData.map((provider) => {
-                        return (
-                            <Marker
-                                key={`marker_${provider.id}`}
-                                provider={provider}
-                                markers={markers}
-                                setActiveMarker={setActiveMarker}
-                            />
-                        );
-                    })}
-                </>
-                {/* <MarkerManager providers={window.mapData} markers={markers} /> */}
+                <BoundsManager
+                    providers={window.mapData}
+                    setZoomLevel={setZoomLevel}
+                />
+                {window.mapData.map((provider) => {
+                    return (
+                        <Marker
+                            key={`marker_${provider.id}`}
+                            provider={provider}
+                            markers={markers}
+                            setActiveMarkerById={setActiveMarkerById}
+                        />
+                    );
+                })}
             </MapContainer>
         </div>
     );

@@ -13,6 +13,10 @@ body {
     grid-template-columns: 400px auto;
 }
 
+.marker-list-container {
+    scroll-behavior: smooth;
+}
+
 @media screen and (max-width: 800px) {
     .layout {
         grid-template-columns: auto;

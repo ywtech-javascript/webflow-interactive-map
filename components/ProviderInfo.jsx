@@ -87,8 +87,8 @@ export default function ProviderInfo({
             );
         }
     }
-    const highlightClass =
-        activeMarker && activeMarker.id === provider.id ? " active" : "";
+    const isActive = activeMarker && activeMarker.id === provider.id;
+    const highlightClass = isActive ? " active" : "";
     return (
         <div className={className + highlightClass} id={provider.id}>
             <div>
