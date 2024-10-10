@@ -4,7 +4,7 @@ import ProviderInfo from "./ProviderInfo";
 
 import Icon from "./Icon";
 
-export default function Marker({ provider, markers }) {
+export default function Marker({ provider, markers, setActiveMarker }) {
     const markerRef = useRef(null);
     markers[provider.id] = markerRef;
     let className = "icon-marker";
@@ -18,6 +18,12 @@ export default function Marker({ provider, markers }) {
             position={[provider.lat, provider.lng]}
             icon={Icon({ className: className })}
             ref={markerRef}
+            eventHandlers={{
+                click: () => {
+                    markerRef.current.id = provider.id;
+                    setActiveMarker(markerRef.current);
+                },
+            }}
         >
             <Popup>
                 <ProviderInfo

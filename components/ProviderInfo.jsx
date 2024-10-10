@@ -7,7 +7,8 @@ import { TbWorld } from "react-icons/tb";
 
 export default function ProviderInfo({
     provider,
-    markers,
+    setActiveMarkerById,
+    activeMarker = null,
     className = "listing",
 }) {
     function getNotes() {
@@ -86,8 +87,10 @@ export default function ProviderInfo({
             );
         }
     }
+    const highlightClass =
+        activeMarker && activeMarker.id === provider.id ? " active" : "";
     return (
-        <div className={className} id={provider.id}>
+        <div className={className + highlightClass} id={provider.id}>
             <div>
                 <h2>{provider.name}</h2>
                 {provider.notes ? <p className="notes">{getNotes()}</p> : ""}
@@ -98,7 +101,8 @@ export default function ProviderInfo({
                     <button
                         className="transparent-button"
                         onClick={(ev) => {
-                            markers[provider.id].current.openPopup();
+                            setActiveMarkerById(provider.id);
+                            // markers[provider.id].current.openPopup();
                         }}
                     >
                         show
