@@ -8,9 +8,9 @@ export default function Marker({ provider, markers, setActiveMarkerById }) {
     const markerRef = useRef(null);
     markers[provider.id] = markerRef;
     let className = "icon-marker";
-    if (provider.accepts_ccap.toUpperCase() === "YES") {
-        className = "icon-marker-ccap";
-    }
+    // if (provider.accepts_ccap.toUpperCase() === "YES") {
+    //     className = "icon-marker-ccap";
+    // }
 
     return (
         <LeafletMarker
