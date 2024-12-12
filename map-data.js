@@ -1,3 +1,7 @@
+window.mapConfig = {
+    height: "300px",
+};
+
 const mapData = [
     {
         lat: 42.0357,

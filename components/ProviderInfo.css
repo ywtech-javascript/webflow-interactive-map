@@ -25,11 +25,6 @@
     margin: 0 0 5px 0;
 }
 
-.marker-list-container {
-    height: 100vh;
-    overflow-y: auto;
-}
-
 .listing .notes,
 .listing .details {
     display: none;

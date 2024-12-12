@@ -33,9 +33,24 @@ export default function App() {
         setActiveMarker(markers[markerId].current);
     }
 
+    const mapHeight =
+        window.mapConfig && window.mapConfig.height
+            ? window.mapConfig.height
+            : "100vh";
+
+    const mapStyles = {
+        height: mapHeight,
+    };
+
+    const panelStyles = {
+        height: mapHeight,
+    };
+
+    console.log(mapStyles, panelStyles);
+
     return (
         <div className="layout">
-            <section className="marker-list-container">
+            <section className="marker-list-container" style={panelStyles}>
                 {window.mapData.map((provider) => {
                     return (
                         <ProviderInfo
@@ -47,12 +62,12 @@ export default function App() {
                     );
                 })}
             </section>
-
             <MapContainer
                 className="full-screen-map"
+                style={mapStyles}
                 center={[42.03, -87.738]}
                 zoom={zoomLevel}
-                scrollWheelZoom={true}
+                scrollWheelZoom={false}
                 minZoom={12}
                 maxBounds={bounds}
             >
