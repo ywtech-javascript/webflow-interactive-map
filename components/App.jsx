@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { MapContainer } from "react-leaflet";
 import BoundsManager from "./BoundsManager";
 import TileManager from "./TileManager";
-import ProviderInfo from "./ProviderInfo";
 import Marker from "./Marker";
 
 export default function App() {
@@ -49,44 +48,30 @@ export default function App() {
     console.log(mapStyles, panelStyles);
 
     return (
-        <div className="layout">
-            <section className="marker-list-container" style={panelStyles}>
-                {window.mapData.map((provider) => {
-                    return (
-                        <ProviderInfo
-                            key={`listing_${provider.id}`}
-                            provider={provider}
-                            setActiveMarkerById={setActiveMarkerById}
-                            activeMarker={activeMarker}
-                        />
-                    );
-                })}
-            </section>
-            <MapContainer
-                className="full-screen-map"
-                style={mapStyles}
-                center={[42.03, -87.738]}
-                zoom={zoomLevel}
-                scrollWheelZoom={false}
-                minZoom={12}
-                maxBounds={bounds}
-            >
-                <TileManager />
-                <BoundsManager
-                    providers={window.mapData}
-                    setZoomLevel={setZoomLevel}
-                />
-                {window.mapData.map((provider) => {
-                    return (
-                        <Marker
-                            key={`marker_${provider.id}`}
-                            provider={provider}
-                            markers={markers}
-                            setActiveMarkerById={setActiveMarkerById}
-                        />
-                    );
-                })}
-            </MapContainer>
-        </div>
+        <MapContainer
+            className="full-screen-map"
+            style={mapStyles}
+            center={[42.03, -87.738]}
+            zoom={zoomLevel}
+            scrollWheelZoom={false}
+            minZoom={12}
+            maxBounds={bounds}
+        >
+            <TileManager />
+            <BoundsManager
+                providers={window.mapData}
+                setZoomLevel={setZoomLevel}
+            />
+            {window.mapData.map((provider) => {
+                return (
+                    <Marker
+                        key={`marker_${provider.id}`}
+                        provider={provider}
+                        markers={markers}
+                        setActiveMarkerById={setActiveMarkerById}
+                    />
+                );
+            })}
+        </MapContainer>
     );
 }
